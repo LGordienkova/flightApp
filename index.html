@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="flightApp">
+	<head>
+		<meta charset="utf-8">
+		<title>Flight data</title>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.js"></script>     
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-route.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.js"></script>
+		<script src="flight_data.js"></script>
+		<script src="script.js"></script>
+	</head>
+	<body ng-controller="flightCtrl">
+	    <button type="button" class="btn btn-info" ng-click="getDep()">Departure</button>
+	    <button type="button" class="btn btn-info" ng-click="getArr()">Arrival</button>
+	    <input ng-model="search" class="form-control"  placeholder="Search">
+        <h1>{{type}}</h1>
+		<table class="table table-hover table-responsive">
+			<tr class="info">
+				<th ng-click="getSortType('fnr')">Flight</th>
+				<th ng-click="getSortType('duration')">Airline</th>
+				<th ng-click="getSortType('apname')">Destination</th>
+				<th ng-click="getSortType('lu')">Time</th>
+				<th ng-click="getSortType('terminal')">Hall</th>
+				<th ng-click="getSortType('status')">Status</th>
+			</tr>
+			<tr ng-repeat="values in data | orderBy:sortType | filter: search | startFrom: startingItem() | limitTo: itemsPerPage">
+				<td>{{values.fnr}}</td>
+				<td>{{values.duration}}</td>
+				<td>{{values.apname}}</td>
+				<td>{{values.lu}}</td>
+				<td>{{values.terminal}}</td>
+				<td>{{values.status}}</td>
+			</tr>
+		</table>
+
+
+		<div id="pagination" class="">
+      		<button class="btn btn-primary" ng-disabled="firstPage()" ng-click="pageBack()">Back</button>
+      		<span>{{currentPage+1}} from {{numberOfPages()}}</span>
+     	    <button class="btn btn-primary" ng-disabled="lastPage()" ng-click="pageForward()">Next</button>
+    	</div>
+
+
+	</body>
+</html>
